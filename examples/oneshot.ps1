@@ -1,0 +1,1 @@
+.\hitokoto.exe --oneshot

@@ -1,0 +1,5 @@
+arrowParens = "avoid"
+quoteProps = "as-needed"
+printWidth = 120
+semi = true
+trailingComma = "none"

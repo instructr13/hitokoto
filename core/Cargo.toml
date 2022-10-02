@@ -1,0 +1,17 @@
+[package]
+name = "hitokoto"
+version = "0.1.0"
+authors = ["Mido <instructr13@gmail.com>"]
+categories = ["text-processing"]
+keywords = ["hitokoto", "quote", "text"]
+description = "Generate your health information easily"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+cached = "0.39"
+rand = "0.8"
+serde = { version = "1.0", features = ["derive"] }

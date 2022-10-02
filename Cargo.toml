@@ -1,0 +1,13 @@
+[workspace]
+resolver = "2"
+members = [
+    "core",
+    "cli",
+    "gui/src-tauri"
+]
+
+[profile.release]
+lto = true
+incremental = true
+panic = "abort"
+strip = true
