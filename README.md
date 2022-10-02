@@ -2,7 +2,7 @@
 <p align="center">Generate a text health information easily. Powered by Rust, TypeScript, Vite, and Tauri.</p>
 
 <p align="center">
-  <img alt="Demo" src="../hitokoto/examples/images/hitokoto.png" />
+  <img alt="Demo" src="./examples/images/hitokoto.png" />
 </p>
 
 ## Features
