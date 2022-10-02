@@ -1,60 +1,64 @@
 name: Rust (clippy)
 
 on:
-  push:
-    branches: "*"
-  pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [ "main" ]
-  schedule:
-    - cron: '31 23 * * 2'
+    push:
+        branches: "*"
+    pull_request:
+        # The branches below must be a subset of the branches above
+        branches: ["main"]
+    schedule:
+        - cron: "31 23 * * 2"
 
 jobs:
-  rust-clippy-analyze:
-    name: Run rust-clippy analyzing
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      security-events: write
-    steps:
-      - uses: actions/checkout@v3
+    rust-clippy-analyze:
+        name: Run rust-clippy analyzing
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            security-events: write
+        steps:
+            - uses: actions/checkout@v3
 
-      - name: Install Rust toolchain
-        uses: actions-rs/toolchain@16499b5e05bf2e26879000db0c1d13f7e13fa3af # @v1
-        with:
-          profile: minimal
-          toolchain: stable
-          components: clippy
-          override: true
+            - name: Install Rust toolchain
+              uses: actions-rs/toolchain@16499b5e05bf2e26879000db0c1d13f7e13fa3af # @v1
+              with:
+                  profile: minimal
+                  toolchain: stable
+                  components: clippy
+                  override: true
 
-      - name: Install clippy-sarif
-        uses: baptiste0928/cargo-install@v1
-        with:
-          crate: clippy-sarif
+            - name: Install clippy-sarif
+              uses: baptiste0928/cargo-install@v1
+              with:
+                  crate: clippy-sarif
 
-      - name: Install sarif-fmt
-        uses: baptiste0928/cargo-install@v1
-        with:
-          crate: sarif-fmt
+            - name: Install sarif-fmt
+              uses: baptiste0928/cargo-install@v1
+              with:
+                  crate: sarif-fmt
 
-      - name: Cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+            - name: Cache
+              uses: actions/cache@v3
+              with:
+                  path: |
+                      ~/.cargo/registry
+                      ~/.cargo/git
+                      target
+                  key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Run rust-clippy
-        run:
-          cargo clippy
-          --all-features
-          --message-format=json | clippy-sarif | tee rust-clippy-results.sarif | sarif-fmt
-        continue-on-error: true
+            - name: Install dependencies
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
 
-      - name: Upload analysis results to GitHub
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: rust-clippy-results.sarif
-          wait-for-processing: true
+            - name: Run rust-clippy
+              run: cargo clippy
+                  --all-features
+                  --message-format=json | clippy-sarif | tee rust-clippy-results.sarif | sarif-fmt
+              continue-on-error: true
+
+            - name: Upload analysis results to GitHub
+              uses: github/codeql-action/upload-sarif@v2
+              with:
+                  sarif_file: rust-clippy-results.sarif
+                  wait-for-processing: true
