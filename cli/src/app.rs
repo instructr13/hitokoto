@@ -8,7 +8,7 @@ use dialoguer::{Input, Select};
 use hitokoto::health::Health;
 use hitokoto::random::{get_random_temperature, DEFAULT_RANGE_MAX, DEFAULT_RANGE_MIN};
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub(crate) enum PromptReasonKind {
     Reason,
     Message,
@@ -91,17 +91,14 @@ impl App {
     fn prompt_health(&self, term: &Term) -> Result<Health> {
         self.check_interactive();
 
+        let variants: Vec<Health> = Health::variants().collect();
+
         Select::with_theme(&ColorfulTheme::default())
             .with_prompt("Your health status:")
-            .items(
-                &Health::variants()
-                    .into_iter()
-                    .map(|h| h.to_string())
-                    .collect::<Vec<_>>(),
-            )
+            .items(&variants)
             .default(0)
             .interact_on(term)
-            .map(|index| (Health::variants()[index]).clone())
+            .map(|index| (variants[index]).clone())
             .map_err(|e| e.into())
     }
 
@@ -113,15 +110,12 @@ impl App {
             PromptReasonKind::Message => "Message:",
         };
 
-        let allow_empty = match kind {
-            PromptReasonKind::Reason => true,
-            PromptReasonKind::Message => false,
-        };
+        let allow_empty = kind == PromptReasonKind::Reason;
 
         Input::<String>::with_theme(&ColorfulTheme::default())
             .with_prompt(prompt)
             .allow_empty(allow_empty)
-            .default("".to_string())
+            .default("".into())
             .interact_on(term)
             .map_err(|e| e.into())
     }
@@ -132,7 +126,7 @@ impl App {
         let input = Input::<String>::with_theme(&ColorfulTheme::default())
             .with_prompt("Additional information (leave empty to skip):")
             .allow_empty(true)
-            .default("".to_string())
+            .default("".into())
             .interact_on(term)?;
 
         match input.as_str() {

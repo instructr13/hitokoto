@@ -1,4 +1,4 @@
-use std::{fmt::Display, str::FromStr};
+use std::{fmt::Display, str::FromStr, array::IntoIter};
 
 use serde::Deserialize;
 
@@ -14,12 +14,12 @@ pub enum Health {
 }
 
 impl Health {
-    pub fn variants() -> Vec<Health> {
-        vec![
+    pub fn variants() -> IntoIter<Health, 3> {
+        IntoIterator::into_iter([
             Health::Healthy,
-            Health::Unhealthy("".to_string()),
-            Health::Custom("".to_string()),
-        ]
+            Health::Unhealthy("".into()),
+            Health::Custom("".into()),
+        ])
     }
 
     pub fn lozalize(&self) -> String {
@@ -65,8 +65,8 @@ impl FromStr for Health {
     fn from_str(value: &str) -> Result<Self, Self::Err> {
         match value {
             "healthy" => Ok(Health::Healthy),
-            "unhealthy" => Ok(Health::Unhealthy("".to_owned())),
-            value => Ok(Health::Custom(value.to_owned())),
+            "unhealthy" => Ok(Health::Unhealthy("".into())),
+            value => Ok(Health::Custom(value.into())),
         }
     }
 }
