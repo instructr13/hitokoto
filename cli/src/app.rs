@@ -141,7 +141,7 @@ impl App {
         }
     }
 
-    pub(crate) fn prompt(&mut self) -> Result<Arguments> {
+    pub(crate) fn prompt(mut self) -> Result<Self> {
         if self.args.oneshot {
             self.args.temperature = self.args.temperature.or_else(|| {
                 Some(
@@ -152,7 +152,7 @@ impl App {
 
             self.args.health = self.args.health.as_ref().or(Some(&Health::Healthy)).cloned();
 
-            return Ok(self.args.clone());
+            return Ok(self);
         }
 
         let term = Term::buffered_stderr();
@@ -175,6 +175,6 @@ impl App {
             self.args.additional = self.prompt_additional(&term)?;
         }
 
-        Ok(self.args.clone())
+        Ok(self)
     }
 }

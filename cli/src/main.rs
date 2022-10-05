@@ -15,9 +15,9 @@ static GLOBAL: MiMalloc = MiMalloc;
 pub(crate) mod app;
 
 fn run() -> Result<()> {
-    let mut app = App::new();
+    let app = App::new();
 
-    let args = app.prompt()?;
+    let args = app.prompt()?.args;
 
     let temperature = args.temperature.ok_or_else(|| anyhow!("Temperature is required but was not defined"))?;
     let health = args.health.ok_or_else(|| anyhow!("Health status is required but was not defined"))?;
