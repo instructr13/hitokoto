@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use tauri::{api::path::app_dir, Config};
 use tokio::fs::read_to_string;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Default)]
 #[serde(rename_all = "camelCase")]
 pub(crate) struct SystemTrayConfig {
     pub(crate) enabled: bool,
@@ -13,6 +13,7 @@ pub(crate) struct SystemTrayConfig {
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub(crate) struct AppConfig {
+    #[serde(default)]
     pub(crate) system_tray: SystemTrayConfig,
 }
 
