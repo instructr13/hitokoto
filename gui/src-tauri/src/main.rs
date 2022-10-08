@@ -9,8 +9,6 @@ use commands::*;
 use anyhow::Result;
 use config::{read_config, AppConfig, SystemTrayConfig};
 use tauri::{generate_context, RunEvent, WindowEvent};
-
-#[cfg(debug_assertions)]
 use tauri::Manager;
 
 use tray::{create_system_tray, create_system_tray_event};
@@ -60,7 +58,7 @@ async fn main() -> Result<()> {
             #[cfg(debug_assertions)]
             window.open_devtools();
 
-            if start_with_hidden {
+            if enabled && start_with_hidden {
                 window.hide()?;
             }
 
