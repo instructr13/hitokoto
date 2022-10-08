@@ -20,24 +20,22 @@ pub(crate) fn create_system_tray_event<R: Runtime>() -> impl Fn(&AppHandle<R>, S
 {
     |app, event| match event {
         SystemTrayEvent::LeftClick { .. } => {
-            let window = app.get_window("main").expect("cannot find main window");
+            let window = app.get_window("main").expect("Cannot find main window");
 
             window.show().unwrap();
             window.set_focus().unwrap();
         }
-        SystemTrayEvent::MenuItemClick { id, .. } => {
-            match id.as_str() {
-                "quit" => {
-                    app.exit(0);
-                }
-                "show" => {
-                    let window = app.get_window("main").expect("cannot find main window");
-
-                    window.show().unwrap();
-                }
-                _ => {}
+        SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
+            "quit" => {
+                app.exit(0);
             }
-        }
+            "show" => {
+                let window = app.get_window("main").expect("Cannot find main window");
+
+                window.show().unwrap();
+            }
+            _ => {}
+        },
         _ => {}
     }
 }

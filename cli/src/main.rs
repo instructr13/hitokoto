@@ -19,8 +19,12 @@ fn run() -> Result<()> {
 
     let args = app.prompt()?.args;
 
-    let temperature = args.temperature.ok_or_else(|| anyhow!("Temperature is required but was not defined"))?;
-    let health = args.health.ok_or_else(|| anyhow!("Health status is required but was not defined"))?;
+    let temperature = args
+        .temperature
+        .ok_or_else(|| anyhow!("Temperature is required but was not defined"))?;
+    let health = args
+        .health
+        .ok_or_else(|| anyhow!("Health status is required but was not defined"))?;
 
     let mut ctx = ClipboardContext::new().map_err(|_| anyhow!("Cannot initialize clipboard"))?;
 

@@ -8,8 +8,8 @@ use commands::*;
 
 use anyhow::Result;
 use config::{read_config, AppConfig, SystemTrayConfig};
-use tauri::{generate_context, RunEvent, WindowEvent};
 use tauri::Manager;
+use tauri::{generate_context, RunEvent, WindowEvent};
 
 use tray::{create_system_tray, create_system_tray_event};
 
@@ -54,7 +54,7 @@ async fn main() -> Result<()> {
             full_generate
         ])
         .setup(move |app| {
-            let window = app.get_window("main").ok_or("cannot find main window")?;
+            let window = app.get_window("main").ok_or("Cannot find main window")?;
             #[cfg(debug_assertions)]
             window.open_devtools();
 
@@ -77,9 +77,9 @@ async fn main() -> Result<()> {
             {
                 api.prevent_close();
 
-                let window = app_handle.get_window("main").expect("cannot find main window");
+                let window = app_handle.get_window("main").expect("Cannot find main window");
 
-                window.hide().expect("cannot hide main window");
+                window.hide().expect("Cannot hide main window");
             }
         });
 

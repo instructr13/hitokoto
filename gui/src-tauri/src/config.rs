@@ -1,4 +1,4 @@
-use anyhow::{Result, anyhow};
+use anyhow::{anyhow, Result};
 use serde::{Deserialize, Serialize};
 use tauri::{api::path::app_dir, Config};
 use tokio::fs::read_to_string;
@@ -18,7 +18,10 @@ pub(crate) struct AppConfig {
 }
 
 pub(crate) async fn read_config(config: &Config) -> Result<AppConfig> {
-    let config_path = app_dir(config).ok_or("cannot find app directory").map_err(|e| anyhow!(e))?.join("settings.json");
+    let config_path = app_dir(config)
+        .ok_or("Cannot find app directory")
+        .map_err(|e| anyhow!(e))?
+        .join("settings.json");
     let raw_config = read_to_string(config_path).await.unwrap_or_else(|_| "{}".into());
     let config = serde_json::from_str(&raw_config)?;
 

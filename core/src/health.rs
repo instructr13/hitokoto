@@ -1,4 +1,4 @@
-use std::{fmt::Display, str::FromStr, array::IntoIter};
+use std::{array::IntoIter, fmt::Display, str::FromStr};
 
 use serde::Deserialize;
 
@@ -15,11 +15,7 @@ pub enum Health {
 
 impl Health {
     pub fn variants() -> IntoIter<Health, 3> {
-        IntoIterator::into_iter([
-            Health::Healthy,
-            Health::Unhealthy("".into()),
-            Health::Custom("".into()),
-        ])
+        IntoIterator::into_iter([Health::Healthy, Health::Unhealthy("".into()), Health::Custom("".into())])
     }
 
     pub fn lozalize(&self) -> String {

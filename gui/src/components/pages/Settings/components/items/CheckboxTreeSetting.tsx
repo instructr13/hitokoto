@@ -70,7 +70,7 @@ const internalTreeHasChildren = (tree: InitialCheckboxTree): tree is InitialPare
             const { checked: defaultChecked, description: children, label } = initialTree;
 
             if (typeof currentTree !== "boolean") {
-                throw new TypeError("conversion error. current tree is not a boolean");
+                throw new TypeError("Conversion error. currentTree is not a boolean");
             }
 
             componentsToAdd.push(
@@ -93,7 +93,7 @@ const internalTreeHasChildren = (tree: InitialCheckboxTree): tree is InitialPare
         }
 
         if (typeof currentTree === "boolean") {
-            throw new TypeError("conversion error. current tree is a boolean");
+            throw new TypeError("Conversion error. currentTree is a boolean");
         }
 
         const keysToSearch = Object.getOwnPropertyNames(currentTree).filter(key => key !== "checked"),
@@ -106,7 +106,7 @@ const internalTreeHasChildren = (tree: InitialCheckboxTree): tree is InitialPare
                 currentChild = currentTree[key];
 
             if (typeIsReactNode(initialChild)) {
-                throw new Error("children was a react component");
+                throw new TypeError("Children of initialTree was a react component");
             }
 
             conditionTree[key] = createInternalTree(
@@ -154,7 +154,7 @@ export const createCheckboxTree = (tree: InitialCheckboxTree): CheckboxTree => {
         const child = tree[key];
 
         if (typeIsReactNode(child)) {
-            throw new Error("children was a react component");
+            throw new TypeError("Children of the initial checkbox tree was a react component");
         }
 
         result[key] = createCheckboxTree(child);

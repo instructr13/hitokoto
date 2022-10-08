@@ -49,7 +49,7 @@ const SettingsContent = ({ modal }: SettingsContentProps) => {
 
             setSystemTraySettings(createCheckboxTree(initialSystemTraySettings));
         })().catch((error: Error) => {
-            toast.error(`設定ファイルのロードに失敗しました。\n${error.message}`);
+            toast.error(`設定ファイルのロードに失敗しました\n${error.message}`);
         });
     });
 
@@ -80,7 +80,7 @@ const SettingsContent = ({ modal }: SettingsContentProps) => {
                                 if (previousTree.checked !== tree.checked) {
                                     toast.info(
                                         <>
-                                            <Text>設定を適用するには再起動が必要になる可能性があります。</Text>
+                                            <Text>設定を適用するには再起動が必要になる可能性があります</Text>
                                             <Flex justify="flex-end" direction="row" mt={2}>
                                                 <Button
                                                     colorScheme="blue"
@@ -100,7 +100,7 @@ const SettingsContent = ({ modal }: SettingsContentProps) => {
                             });
                         })
                         .catch((error: Error) => {
-                            toast.error(`設定ファイルの書き込みに失敗しました。\n${error.message}`);
+                            toast.error(`設定ファイルの書き込みに失敗しました\n${error.message}`);
                         });
                 }}
                 value={systemTraySettings}
