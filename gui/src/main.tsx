@@ -8,6 +8,9 @@ import App from "@/components/App";
 import theme, { config } from "@/styles/theme";
 
 import "react-toastify/dist/ReactToastify.min.css";
+import settingsManager from "./lib/settings";
+
+await settingsManager.initialize();
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 createRoot(document.querySelector("#root")!).render(

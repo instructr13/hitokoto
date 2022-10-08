@@ -8,6 +8,5 @@ members = [
 
 [profile.release]
 lto = true
-incremental = true
 panic = "abort"
 strip = true

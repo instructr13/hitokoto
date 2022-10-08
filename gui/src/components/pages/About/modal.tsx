@@ -17,8 +17,8 @@ import AboutFooter from "./components/AboutFooter";
 import AboutHeader from "./components/AboutHeader";
 
 const AboutModal = () => {
-    const navigate = useNavigate(),
-        { application } = useAbout(),
+    const { application } = useAbout(),
+        navigate = useNavigate(),
         { isOpen, onClose: disclosureOnClose } = useDisclosure({ isOpen: true }),
         onClose = () => {
             disclosureOnClose();
@@ -45,7 +45,7 @@ const AboutModal = () => {
                 </ModalHeader>
                 <ModalCloseButton />
                 <ModalBody overflowY="scroll">
-                    <AboutContent authors={application.authors} license={application.license} />
+                    <AboutContent authors={application.authors} license={application.license} modal />
                 </ModalBody>
                 <ModalFooter display="block">
                     <AboutFooter

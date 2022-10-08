@@ -14,12 +14,30 @@
             "clipboard": {
                 "writeText": true
             },
+            "fs": {
+                "createDir": true,
+                "readDir": true,
+                "readFile": true,
+                "scope": ["$CONFIG/*"],
+                "writeFile": true
+            },
             "globalShortcut": {
                 "all": true
+            },
+            "path": {
+                "all": true
+            },
+            "process": {
+                "exit": true,
+                "relaunch": true
             },
             "shell": {
                 "open": true
             }
+        },
+        "systemTray": {
+            "iconPath": "icons/icon.png",
+            "iconAsTemplate": true
         },
         "bundle": {
             "active": true,
@@ -36,7 +54,7 @@
                 "icons/icon.icns",
                 "icons/icon.ico"
             ],
-            "identifier": "com.instructr13.hitokoto",
+            "identifier": "hitokoto",
             "longDescription": "Generate your health information easily",
             "macOS": {
                 "entitlements": null,

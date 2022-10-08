@@ -1,11 +1,19 @@
 #![cfg_attr(all(not(debug_assertions), target_os = "windows"), windows_subsystem = "windows")]
 
 mod commands;
+mod config;
+mod tray;
 
 use commands::*;
 
+use anyhow::Result;
+use config::{read_config, AppConfig, SystemTrayConfig};
+use tauri::{generate_context, RunEvent, WindowEvent};
+
 #[cfg(debug_assertions)]
 use tauri::Manager;
+
+use tray::{create_system_tray, create_system_tray_event};
 
 #[cfg(target_env = "msvc")]
 use mimalloc::MiMalloc;
@@ -14,8 +22,30 @@ use mimalloc::MiMalloc;
 #[global_allocator]
 static GLOBAL: MiMalloc = MiMalloc;
 
-fn main() {
-    tauri::Builder::default()
+#[tokio::main]
+async fn main() -> Result<()> {
+    let context = generate_context!();
+
+    let AppConfig {
+        system_tray: SystemTrayConfig {
+            enabled,
+            start_with_hidden,
+        },
+    } = read_config(context.config()).await?;
+
+    let builder = {
+        let builder = tauri::Builder::default();
+
+        if enabled {
+            builder
+                .system_tray(create_system_tray())
+                .on_system_tray_event(create_system_tray_event())
+        } else {
+            builder
+        }
+    };
+
+    builder
         .invoke_handler(tauri::generate_handler![
             generate_random_template,
             get_core_name,
@@ -25,14 +55,35 @@ fn main() {
             get_temperature_range_min,
             full_generate
         ])
-        .setup(|_app| {
+        .setup(move |app| {
+            let window = app.get_window("main").ok_or("cannot find main window")?;
             #[cfg(debug_assertions)]
-            _app.get_window("main")
-                .ok_or("cannot find main window")?
-                .open_devtools();
+            window.open_devtools();
+
+            if start_with_hidden {
+                window.hide()?;
+            }
 
             Ok(())
         })
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .build(context)?
+        .run(move |app_handle, event| {
+            if !enabled {
+                return;
+            }
+
+            if let RunEvent::WindowEvent {
+                event: WindowEvent::CloseRequested { api, .. },
+                ..
+            } = event
+            {
+                api.prevent_close();
+
+                let window = app_handle.get_window("main").expect("cannot find main window");
+
+                window.hide().expect("cannot hide main window");
+            }
+        });
+
+    Ok(())
 }

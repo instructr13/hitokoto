@@ -1,3 +1,19 @@
+import React from "react";
+
+import type { ReactNode } from "react";
+
+export const typeIsReactNode = (t: unknown): t is ReactNode => {
+    if (["string", "number", "boolean", "function", "undefined"].includes(typeof t)) {
+        return true;
+    } else if (t === null) {
+        return true;
+    } else if (t instanceof React.Component) {
+        return true;
+    }
+
+    return false;
+};
+
 export const asTemperature = (temperature: number) => {
     return `${normalizeFloat(temperature)}°C`;
 };

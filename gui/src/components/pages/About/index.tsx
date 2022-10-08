@@ -10,7 +10,7 @@ const Page = () => {
     const { application } = useAbout();
 
     return (
-        <Grid templateRows="auto 1fr auto">
+        <Grid gap={5} templateRows="auto 1fr auto">
             <GridItem mt={10} textAlign="center">
                 <AboutHeader
                     name="Hitokoto"
@@ -26,7 +26,7 @@ const Page = () => {
             <GridItem>
                 <AboutContent authors={application.authors} license={application.license} />
             </GridItem>
-            <GridItem display="block">
+            <GridItem display="block" p={6}>
                 <AboutFooter
                     coreName={application.coreName}
                     coreVersion={application.coreVersion}

@@ -16,16 +16,17 @@ import ExternalLink from "@/components/elements/ExternalLink";
 
 import AboutAccordionItem from "./AboutAccordionItem";
 
-export type AboutContentProps = Required<{
+export interface AboutContentProps {
     authors: string[];
     license: string;
-}>;
+    modal?: boolean;
+}
 
-const AboutContent = ({ authors, license }: AboutContentProps) => {
+const AboutContent = ({ authors, license, modal }: AboutContentProps) => {
     const [formIsRandom] = useLocalStorage("formIsRandom");
 
     return (
-        <Container maxW="md">
+        <Container maxW={modal ? "md" : "2xl"}>
             <Accordion allowToggle>
                 <AccordionItem>
                     <Heading as="h2" fontSize="lg">
