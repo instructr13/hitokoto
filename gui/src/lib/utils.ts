@@ -1,5 +1,7 @@
 import React from "react";
 
+import type { CheckboxTree } from "@/components/pages/Settings/components/items/CheckboxTreeSetting";
+
 import type { ReactNode } from "react";
 
 export const typeIsReactNode = (t: unknown): t is ReactNode => {
@@ -12,6 +14,22 @@ export const typeIsReactNode = (t: unknown): t is ReactNode => {
     }
 
     return false;
+};
+
+export const treeIsChecked = (tree: CheckboxTree): boolean => {
+    if (typeof tree === "boolean") {
+        return tree;
+    }
+
+    return tree.checked;
+};
+
+export const updateTree = (tree: CheckboxTree, newValue: boolean) => {
+    if (typeof tree === "boolean") {
+        return;
+    }
+
+    tree.checked = newValue;
 };
 
 export const asTemperature = (temperature: number) => {

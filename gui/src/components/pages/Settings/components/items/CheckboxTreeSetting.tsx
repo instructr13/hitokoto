@@ -181,6 +181,7 @@ const CheckboxTreeSetting = ({ initialValue, onChange, value }: CheckboxTreeProp
                     return;
                 }
 
+                // copy to a new object to let the component reload itself
                 const newValue = { ...value };
 
                 dot.str(key.split("#root#.")[1], tree, newValue);
