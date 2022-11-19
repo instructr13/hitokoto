@@ -1,8 +1,8 @@
 import { RepeatIcon } from "@chakra-ui/icons";
 import { Button, Container, Flex, Text } from "@chakra-ui/react";
 import { relaunch } from "@tauri-apps/api/process";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { useEffectOnce } from "react-use";
 
 import { useCheckboxTree } from "@/hooks/settings";
 import settingsManager from "@/lib/settings";
@@ -26,7 +26,7 @@ const SettingsContent = ({ modal }: SettingsContentProps) => {
         }
     });
 
-    useEffectOnce(() => {
+    useEffect(() => {
         (async () => {
             const config = await settingsManager.get("systemTray");
 
@@ -45,7 +45,7 @@ const SettingsContent = ({ modal }: SettingsContentProps) => {
         })().catch((error: Error) => {
             toast.error(`設定ファイルのロードに失敗しました\n${error.message}`);
         });
-    });
+    }, [setSystemTraySettings]);
 
     return (
         <Container maxW={modal ? "lg" : "2xl"}>

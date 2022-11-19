@@ -2,13 +2,14 @@ import { Grid, GridItem, Kbd, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useKey, useLocalStorage } from "react-use";
+import useLocalStorageState from "use-local-storage-state";
 
 import AdditionalInput from "@/components/elements/form/AdditionalInput";
 import CopySubmitButton from "@/components/elements/form/CopySubmitButton";
 import HealthDetailInput from "@/components/elements/form/HealthDetailInput";
 import HealthRadioGroup from "@/components/elements/form/HealthRadioGroup";
 import { useDefaultForm } from "@/hooks/form";
+import { useKey } from "@/hooks/key";
 import { submitRandom } from "@/lib/submit";
 import type { RandomFieldValues } from "@/schemas/random";
 import { parsedRandomSchema, randomSchema } from "@/schemas/random";
@@ -18,24 +19,22 @@ import TemperatureRangeSlider from "./components/TemperatureRangeSlider";
 
 const Random = () => {
     const navigate = useNavigate(),
-        [_, setIsRandom] = useLocalStorage("formIsRandom", false),
-        [randomFieldValues] = useLocalStorage<RandomFieldValues>("randomFieldValues", parsedRandomSchema),
+        [_, setIsRandom] = useLocalStorageState("formIsRandom"),
+        [randomFieldValues] = useLocalStorageState<RandomFieldValues>("randomFieldValues", {
+            defaultValue: parsedRandomSchema
+        }),
         methods = useDefaultForm({
-            defaultValues: randomFieldValues || parsedRandomSchema,
+            defaultValues: randomFieldValues,
             mode: "all",
             resolver: zodResolver(randomSchema)
         }),
         { handleSubmit } = methods;
 
-    useKey(
-        event => event.altKey && event.key === "e",
-        () => {
-            setIsRandom(false);
+    useKey(["alt", "e"], () => {
+        setIsRandom(false);
 
-            navigate("../normal");
-        },
-        { event: "keydown" }
-    );
+        navigate("../normal");
+    });
 
     return (
         <FormProvider {...methods}>

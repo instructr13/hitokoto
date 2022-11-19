@@ -2,7 +2,7 @@ import { useColorMode } from "@chakra-ui/system";
 import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { useLocalStorage } from "react-use";
+import useLocalStorageState from "use-local-storage-state";
 
 import Loadable from "./Loadable";
 import MainLayout from "./layouts";
@@ -27,7 +27,9 @@ const Normal = Loadable(
         const location = useLocation(),
             background: Location | undefined = location.state?.background,
             { colorMode } = useColorMode(),
-            [isRandom] = useLocalStorage("formIsRandom", false);
+            [isRandom] = useLocalStorageState("formIsRandom", {
+                defaultValue: false
+            });
 
         return (
             <>

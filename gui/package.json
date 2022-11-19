@@ -31,8 +31,8 @@
         "react-hook-form": "^7.39.4",
         "react-router-dom": "^6.4.3",
         "react-toastify": "^9.1.1",
-        "react-use": "^17.4.0",
         "tauri-settings": "^0.1.2",
+        "use-local-storage-state": "^18.1.1",
         "zod": "^3.19.1"
     },
     "devDependencies": {

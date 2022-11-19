@@ -30,16 +30,18 @@ const RANDOM_REGEX = /(%random%)/,
                     プレビュー
                 </Heading>
                 <Code display="block" overflow="auto" maxH={150} mt={2} p={4} fontSize="md" whiteSpace="pre">
-                    {preview.split(RANDOM_REGEX).map((part, index) =>
-                        part === "%random%" ? (
-                            <Box key={index} display="inline" color="gray.400" fontStyle="italic">
-                                ランダム生成 (
-                                {rangeMin === rangeMax ? `固定値：${rangeMin}` : `${rangeMin}～${rangeMax}`})
-                            </Box>
-                        ) : (
-                            part
-                        )
-                    )}
+                    {preview !== ""
+                        ? preview.split(RANDOM_REGEX).map((part, index) =>
+                              part === "%random%" ? (
+                                  <Box key={index} display="inline" color="gray.400" fontStyle="italic">
+                                      ランダム生成 (
+                                      {rangeMin === rangeMax ? `固定値：${rangeMin}` : `${rangeMin}～${rangeMax}`})
+                                  </Box>
+                              ) : (
+                                  part
+                              )
+                          )
+                        : "..."}
                 </Code>
             </Box>
         );

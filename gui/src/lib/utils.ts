@@ -4,6 +4,42 @@ import type { CheckboxTree } from "@/components/pages/Settings/components/items/
 
 import type { ReactNode } from "react";
 
+export const ALPHABETS = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z"
+] as const satisfies readonly string[];
+export type Alphabets = typeof ALPHABETS[number];
+
+/**
+ * Do nothing.
+ */
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+export const noop = () => {}
+
 export const typeIsReactNode = (t: unknown): t is ReactNode => {
     if (["string", "number", "boolean", "function", "undefined"].includes(typeof t)) {
         return true;

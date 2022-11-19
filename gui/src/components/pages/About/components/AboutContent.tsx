@@ -10,7 +10,7 @@ import {
     ListItem,
     UnorderedList
 } from "@chakra-ui/react";
-import { useLocalStorage } from "react-use";
+import useLocalStorageState from "use-local-storage-state";
 
 import ExternalLink from "@/components/elements/ExternalLink";
 
@@ -23,7 +23,7 @@ export interface AboutContentProps {
 }
 
 const AboutContent = ({ authors, license, modal }: AboutContentProps) => {
-    const [formIsRandom] = useLocalStorage("formIsRandom");
+    const [formIsRandom] = useLocalStorageState("formIsRandom");
 
     return (
         <Container maxW={modal ? "md" : "2xl"}>

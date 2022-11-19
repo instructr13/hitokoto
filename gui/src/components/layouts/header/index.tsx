@@ -3,6 +3,7 @@ import { Grid, GridItem, IconButton, Tooltip } from "@chakra-ui/react";
 import { Link, useLocation } from "react-router-dom";
 
 import ColorModeToggleButton from "./components/ColorModeToggleButton";
+import RandomModeText from "./components/RandomModeText";
 
 const Header = () => {
     const location = useLocation();
@@ -10,7 +11,7 @@ const Header = () => {
     return (
         <header>
             <nav>
-                <Grid templateColumns="auto 1fr auto">
+                <Grid templateColumns="auto auto 1fr auto auto">
                     <GridItem>
                         <Tooltip label="設定">
                             <IconButton
@@ -34,6 +35,10 @@ const Header = () => {
                                 variant="ghost"
                             />
                         </Tooltip>
+                    </GridItem>
+                    <GridItem />
+                    <GridItem>
+                        <RandomModeText />
                     </GridItem>
                     <GridItem>
                         <ColorModeToggleButton />
