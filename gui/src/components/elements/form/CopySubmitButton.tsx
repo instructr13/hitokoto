@@ -9,7 +9,7 @@ const CopySubmitButton = () => {
 
     return (
         <Tooltip isDisabled={!isValid} label="結果を生成し、コピーします">
-            <Button colorScheme="green" disabled={!isValid} isLoading={isSubmitting} type="submit">
+            <Button w={100} colorScheme="green" disabled={!isValid} isLoading={isSubmitting} type="submit">
                 <CopyIcon mr={2} />
                 コピー
             </Button>

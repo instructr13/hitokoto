@@ -320,7 +320,12 @@ module.exports = {
                 "react/jsx-indent-props": "off",
                 "react/jsx-max-props-per-line": "off",
                 "react/jsx-no-leaked-render": "error",
-                "react/jsx-no-useless-fragment": "error",
+                "react/jsx-no-useless-fragment": [
+                    "error",
+                    {
+                        allowExpressions: true
+                    }
+                ],
                 "react/jsx-one-expression-per-line": "off",
                 "react/jsx-props-no-multi-spaces": "off",
                 "react/jsx-space-before-closing": "off",
@@ -482,10 +487,15 @@ module.exports = {
             }
         },
         {
-            files: ["src/components/**/*.tsx"],
+            files: ["src/**/components/**/[!index]*.tsx", "src/**/components/elements/**/*.tsx"],
             plugins: ["unicorn"],
             rules: {
-                "unicorn/filename-case": "off"
+                "unicorn/filename-case": [
+                    "error",
+                    {
+                        case: "pascalCase"
+                    }
+                ]
             }
         },
         {

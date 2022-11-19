@@ -43,7 +43,7 @@ const TemperatureSlider = () => {
         };
 
     return (
-        <Grid gap={1} templateColumns="auto 1fr auto">
+        <Grid gap={1} templateColumns="auto 1fr auto" h={50}>
             <GridItem>
                 <Button {...decrementButtonProps}>-</Button>
             </GridItem>

@@ -6,15 +6,23 @@ import { useLocalStorage } from "react-use";
 
 import Loadable from "./Loadable";
 import MainLayout from "./layouts";
+import NormalSuspense from "./pages/Normal/index.skeleton";
+import RandomSuspense from "./pages/Random/index.skeleton";
 
 import type { Location } from "react-router-dom";
 
-const Normal = Loadable(lazy(async () => import("./pages/Normal"))),
-    Random = Loadable(lazy(async () => import("./pages/Random"))),
+const Normal = Loadable(
+        lazy(async () => import("./pages/Normal")),
+        NormalSuspense
+    ),
+    Random = Loadable(
+        lazy(async () => import("./pages/Random")),
+        RandomSuspense
+    ),
     Settings = Loadable(lazy(async () => import("./pages/Settings"))),
-    SettingsModal = Loadable(lazy(async () => import("./pages/Settings/modal"))),
+    SettingsModal = Loadable(lazy(async () => import("./pages/Settings/index.modal"))),
     About = Loadable(lazy(async () => import("./pages/About"))),
-    AboutModal = Loadable(lazy(async () => import("./pages/About/modal"))),
+    AboutModal = Loadable(lazy(async () => import("./pages/About/index.modal"))),
     App = () => {
         const location = useLocation(),
             background: Location | undefined = location.state?.background,

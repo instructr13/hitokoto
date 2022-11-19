@@ -6,10 +6,16 @@ import Header from "./header";
 import type { ReactElement } from "react";
 
 const MainLayout = ({ children }: { children?: ReactElement }) => (
-    <Container maxW="container.md" pt={4}>
-        <Header />
-        {children ? <main>{children}</main> : <Outlet />}
-    </Container>
+    <div
+        onContextMenu={e => {
+            e.preventDefault();
+        }}
+    >
+        <Container as="main" maxW="container.md" pt={4}>
+            <Header />
+            {children ? <main>{children}</main> : <Outlet />}
+        </Container>
+    </div>
 );
 
 export default MainLayout;

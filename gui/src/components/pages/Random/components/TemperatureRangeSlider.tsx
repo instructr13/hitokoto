@@ -1,4 +1,5 @@
 import {
+    Box,
     RangeSlider,
     RangeSliderFilledTrack,
     RangeSliderMark,
@@ -33,51 +34,53 @@ const TemperatureRangeSlider = () => {
             control={control}
             name="temperatureRange"
             render={({ field }) => (
-                <RangeSlider
-                    h={10}
-                    aria-label={["Minimum temperature", "Maximum temperature"]}
-                    defaultValue={temperatureRange}
-                    max={max}
-                    min={min}
-                    step={0.1}
-                    {...field}
-                >
-                    <RangeSliderMark value={min} {...edgeSliderMarkStyles}>
-                        {normalizeFloat(min)}
-                    </RangeSliderMark>
-                    {integerRange.map((temperatureMark, index) => (
-                        <RangeSliderMark key={index} value={temperatureMark} {...sliderMarkStyles}>
-                            <Text>{normalizeFloat(temperatureMark)}</Text>
+                <Box h={50}>
+                    <RangeSlider
+                        h={10}
+                        aria-label={["Minimum temperature", "Maximum temperature"]}
+                        defaultValue={temperatureRange}
+                        max={max}
+                        min={min}
+                        step={0.1}
+                        {...field}
+                    >
+                        <RangeSliderMark value={min} {...edgeSliderMarkStyles}>
+                            {normalizeFloat(min)}
                         </RangeSliderMark>
-                    ))}
-                    <RangeSliderMark value={max} {...edgeSliderMarkStyles}>
-                        {normalizeFloat(max)}
-                    </RangeSliderMark>
-                    {temperatureRange.map((value, index) => (
-                        <RangeSliderMark
-                            key={index}
-                            zIndex={10}
-                            w={16}
-                            mt={-6}
-                            ml={-7}
-                            color="white"
-                            textAlign="center"
-                            bg="blue.500"
-                            value={value}
-                        >
-                            <Text fontSize="xm">{asTemperature(value)}</Text>
+                        {integerRange.map((temperatureMark, index) => (
+                            <RangeSliderMark key={index} value={temperatureMark} {...sliderMarkStyles}>
+                                <Text>{normalizeFloat(temperatureMark)}</Text>
+                            </RangeSliderMark>
+                        ))}
+                        <RangeSliderMark value={max} {...edgeSliderMarkStyles}>
+                            {normalizeFloat(max)}
                         </RangeSliderMark>
-                    ))}
-                    <RangeSliderTrack>
-                        <RangeSliderFilledTrack />
-                    </RangeSliderTrack>
-                    <Tooltip label="最小値">
-                        <RangeSliderThumb index={0} />
-                    </Tooltip>
-                    <Tooltip label="最大値">
-                        <RangeSliderThumb index={1} />
-                    </Tooltip>
-                </RangeSlider>
+                        {temperatureRange.map((value, index) => (
+                            <RangeSliderMark
+                                key={index}
+                                zIndex={10}
+                                w={16}
+                                mt={-6}
+                                ml={-7}
+                                color="white"
+                                textAlign="center"
+                                bg="blue.500"
+                                value={value}
+                            >
+                                <Text fontSize="xm">{asTemperature(value)}</Text>
+                            </RangeSliderMark>
+                        ))}
+                        <RangeSliderTrack>
+                            <RangeSliderFilledTrack />
+                        </RangeSliderTrack>
+                        <Tooltip label="最小値">
+                            <RangeSliderThumb index={0} />
+                        </Tooltip>
+                        <Tooltip label="最大値">
+                            <RangeSliderThumb index={1} />
+                        </Tooltip>
+                    </RangeSlider>
+                </Box>
             )}
         />
     );
