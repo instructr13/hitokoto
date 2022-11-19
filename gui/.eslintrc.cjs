@@ -15,7 +15,6 @@ module.exports = {
                 "plugin:import/typescript"
             ],
             files: ["**.ts{,x}"],
-            plugins: ["chakra-ui"],
             parser: "@typescript-eslint/parser",
             parserOptions: {
                 ecmaVersion: "latest",
@@ -25,6 +24,7 @@ module.exports = {
                 project: ["./tsconfig.json"],
                 tsconfigRootDir: __dirname
             },
+            plugins: ["chakra-ui"],
             rules: {
                 "@typescript-eslint/array-type": [
                     "error",
@@ -73,6 +73,7 @@ module.exports = {
                     }
                 ],
                 "@typescript-eslint/no-require-imports": "error",
+                "@typescript-eslint/no-unsafe-call": "off",
                 "@typescript-eslint/no-unnecessary-boolean-literal-compare": "error",
                 "@typescript-eslint/no-unnecessary-condition": "error",
                 "@typescript-eslint/no-unnecessary-qualifier": "error",
