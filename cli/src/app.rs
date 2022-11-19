@@ -17,37 +17,41 @@ pub(crate) enum PromptReasonKind {
 #[derive(Clone, Debug, Parser)]
 #[command(author, version, about, long_about = None)]
 pub(crate) struct Arguments {
-    #[arg(short, long, value_name = "N", help = "Your temperature in Celsius")]
+    /// Your temperature in Celsius
+    #[arg(short, long, value_name = "N")]
     pub(crate) temperature: Option<f64>,
 
+    /// Your health status
+    ///
+    /// CUSTOM will replace any health messages including '健康' and '不良'.
     #[arg(
         short = 'e',
         long,
         value_name = "healthy|unhealthy|CUSTOM",
-        help = "Your health status"
     )]
     pub(crate) health: Option<Health>,
 
-    #[arg(short, long, value_name = "TEXT", help = "Additional information to provide")]
+    /// Additional information to provide
+    ///
+    /// This will be added at last of generated text with newline.
+    #[arg(short, long, value_name = "TEXT")]
     pub(crate) additional: Option<String>,
 
-    #[arg(short, long, help = "Generate your health status without prompting")]
+    /// Generae your health status without prompting
+    ///
+    /// The generated health text will be:
+    ///     temperature: [Generated randomly]
+    ///     health: [Health::Healthy]
+    ///     additional: [None]
+    #[arg(short, long, verbatim_doc_comment)]
     oneshot: bool,
 
-    #[arg(
-        long,
-        value_name = "N",
-        default_value_t = DEFAULT_RANGE_MIN,
-        help = "Minimum random temperature range in Celsius"
-    )]
+    /// Minimum random temperature range in Celsius
+    #[arg(long, value_name = "N", default_value_t = DEFAULT_RANGE_MIN)]
     pub(crate) range_min: f64,
 
-    #[arg(
-        long,
-        value_name = "N",
-        default_value_t = DEFAULT_RANGE_MAX,
-        help = "Maximum random temperature range in Celsius"
-    )]
+    /// Maximum (included) random temperature range in Celsius
+    #[arg(long, value_name = "N", default_value_t = DEFAULT_RANGE_MAX)]
     pub(crate) range_max: f64,
 }
 
